@@ -1,0 +1,36 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 300,
+  "height": 300,
+  "params": [{"name": "no_male", "select": "point"}],
+  "data": {
+    "url": "https://raw.githubusercontent.com/Billabilling/AdvMap/main/district%20(1).json",
+    "format": {"type": "topojson", "feature": "district"}
+  },
+  "transform": [
+    {
+      "lookup": "properties.OBJECTID",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/Billabilling/AdvMap/main/district.csv"
+        },
+        "key": "OBJECTID",
+        "fields": ["no_male"]
+      }
+    }
+  ],
+  "projection": {"type": "mercator"},
+  "mark": "geoshape",
+  "encoding": {
+    "color": {
+      "condition": {
+        "param": "no_male",
+        "field": "no_male",
+        "type": "quantitative"
+      },
+      "value": "grey"
+    },
+    "opacity": {"condition": {"param": "no_male", "value": 1}, "value": 0.3}
+  },
+  "config": {}
+}
